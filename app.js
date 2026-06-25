@@ -1,5 +1,16 @@
 alert("Contribution Draw starting");
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 const googleBtn = document.getElementById("googleBtn");
 const agreeBox = document.getElementById("agreeBox");
 const userSection = document.getElementById("userSection");
@@ -9,6 +20,22 @@ const saveNameBtn = document.getElementById("saveNameBtn");
 let currentUser = null;
 let isAdmin = false;
 
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) return;
+
+  currentUser = user;
+
+  isAdmin =
+    user.email.toLowerCase() ===
+    ADMIN_EMAIL.toLowerCase();
+
+  userSection.style.display = "block";
+
+  alert("Signed in as " + user.email);
+
+});
+
 googleBtn.addEventListener("click", async () => {
 
   if (!agreeBox.checked) {
@@ -16,11 +43,17 @@ googleBtn.addEventListener("click", async () => {
     return;
   }
 
-  alert(
-    "Authentication setup successful. Sign-in code coming in Part 2."
-  );
+  try {
 
-  userSection.style.display = "block";
+    const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, provider);
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
 
 });
 
