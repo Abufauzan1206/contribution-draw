@@ -2,6 +2,12 @@ alert("Contribution Draw starting");
 
 const googleBtn = document.getElementById("googleBtn");
 const agreeBox = document.getElementById("agreeBox");
+const userSection = document.getElementById("userSection");
+const displayNameInput = document.getElementById("displayName");
+const saveNameBtn = document.getElementById("saveNameBtn");
+
+let currentUser = null;
+let isAdmin = false;
 
 googleBtn.addEventListener("click", async () => {
 
@@ -10,6 +16,23 @@ googleBtn.addEventListener("click", async () => {
     return;
   }
 
-  alert("Google Sign-In coming next.");
+  alert(
+    "Authentication setup successful. Sign-in code coming in Part 2."
+  );
+
+  userSection.style.display = "block";
+
+});
+
+saveNameBtn.addEventListener("click", () => {
+
+  const name = displayNameInput.value.trim();
+
+  if (!name) {
+    alert("Please enter a name.");
+    return;
+  }
+
+  alert("Name saved: " + name);
 
 });
