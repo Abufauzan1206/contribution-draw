@@ -1,14 +1,15 @@
-alert("Contribution Draw loaded");
+alert("Contribution Draw starting");
 
 const googleBtn = document.getElementById("googleBtn");
 const agreeBox = document.getElementById("agreeBox");
 
-googleBtn.addEventListener("click", () => {
+googleBtn.addEventListener("click", async () => {
 
   if (!agreeBox.checked) {
     alert("Please accept the Terms and Conditions first.");
     return;
   }
 
-  alert("Google Sign-In will start here.");
+  alert("Google Sign-In coming next.");
+
 });
