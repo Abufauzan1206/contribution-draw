@@ -32,6 +32,16 @@ onAuthStateChanged(auth, (user) => {
 
   userSection.style.display = "block";
 
+  if (isAdmin) {
+
+    document.getElementById("nameTitle").innerText =
+      "Enter Two Beneficiary Names";
+
+    document.getElementById("displayName2").style.display =
+      "block";
+
+  }
+
   alert("Signed in as " + user.email);
 
 });
