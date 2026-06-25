@@ -69,13 +69,35 @@ googleBtn.addEventListener("click", async () => {
 
 saveNameBtn.addEventListener("click", () => {
 
-  const name = displayNameInput.value.trim();
+  const name1 = displayNameInput.value.trim();
 
-  if (!name) {
-    alert("Please enter a name.");
+if (!name1) {
+  alert("Please enter a beneficiary name.");
+  return;
+}
+
+if (isAdmin) {
+
+  const name2 =
+    document.getElementById("displayName2")
+    .value.trim();
+
+  if (!name2) {
+    alert("Please enter the second beneficiary name.");
     return;
   }
 
-  alert("Name saved: " + name);
+  alert(
+    "Admin names saved:\n" +
+    name1 +
+    "\n" +
+    name2
+  );
+
+} else {
+
+  alert("Name saved: " + name1);
+
+}
 
 });
