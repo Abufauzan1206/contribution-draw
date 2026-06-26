@@ -367,3 +367,114 @@ I have read and agree to the Terms & Conditions.
 </label>
 
 </div>
+
+    <!-- ========================= -->
+<!-- AUTHENTICATION            -->
+<!-- ========================= -->
+
+<div class="auth-card">
+
+    <h3>
+        Sign in to Continue
+    </h3>
+
+    <p>
+        Please sign in with your Google account before participating in the draw.
+    </p>
+
+    <button id="googleSignInBtn" class="primary-btn">
+
+        🔐 Sign in with Google
+
+    </button>
+
+    <button
+        id="signOutBtn"
+        class="secondary-btn hidden">
+
+        Sign Out
+
+    </button>
+
+</div>
+
+<!-- ========================= -->
+<!-- USER INFORMATION          -->
+<!-- ========================= -->
+
+<div
+    id="userSection"
+    class="hidden">
+
+    <div class="welcome-card">
+
+        <h3>
+
+            Welcome
+
+        </h3>
+
+        <p id="welcomeMessage">
+
+            Signed in successfully.
+
+        </p>
+
+    </div>
+
+    <div class="beneficiary-card">
+
+        <h3>
+
+            Beneficiary Name
+
+        </h3>
+
+        <p>
+
+            Enter the name that should appear when your month is revealed.
+
+        </p>
+
+        <input
+            type="text"
+            id="displayName"
+            placeholder="Example: Dr Musa Bello">
+
+        <button
+            id="saveNameBtn"
+            class="primary-btn">
+
+            Continue
+
+        </button>
+
+        <p
+            id="saveStatus"
+            class="status-text">
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- LOADING INDICATOR         -->
+<!-- ========================= -->
+
+<div
+    id="loadingOverlay"
+    class="hidden">
+
+    <div class="loader"></div>
+
+    <p>
+
+        Please wait...
+
+    </p>
+
+</div>
+
+    </section>
