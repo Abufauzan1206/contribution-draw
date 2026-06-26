@@ -83,3 +83,109 @@
 <main>
 
 <section id="homeSection">
+    <h2>Welcome</h2>
+
+    <p class="intro">
+        Welcome to Contribution Draw, a secure and transparent platform for
+        allocating contribution months fairly among members.
+    </p>
+
+    <!-- Terms & Conditions -->
+
+    <section id="termsSection">
+
+        <h3>Terms & Conditions</h3>
+
+        <div id="termsBox">
+
+            <ol>
+
+                <li>
+                    Every member has an equal opportunity to draw one hidden month.
+                </li>
+
+                <li>
+                    By accepting these Terms & Conditions and signing in with Google,
+                    you agree to participate in the contribution draw.
+                </li>
+
+                <li>
+                    Contributions must be paid within three (3) days of the scheduled
+                    payment date unless a valid reason has been communicated to the
+                    coordinator.
+                </li>
+
+                <li>
+                    Failure to comply attracts a ₦10,000 penalty payable to the
+                    beneficiary of that month's contribution.
+                </li>
+
+                <li>
+                    The administrator reserves the right to enforce these rules
+                    fairly and transparently.
+                </li>
+
+            </ol>
+
+        </div>
+
+        <label class="agree">
+
+            <input
+                type="checkbox"
+                id="agreeBox"
+            >
+
+            I have read and agree to the Terms & Conditions.
+
+        </label>
+
+    </section>
+
+    <!-- Authentication -->
+
+    <section id="authSection">
+
+        <button id="googleBtn">
+
+            Verify with Google
+
+        </button>
+
+    </section>
+
+    <!-- User Section -->
+
+    <section
+        id="userSection"
+        class="hidden"
+    >
+
+        <h3 id="nameTitle">
+
+            Beneficiary Name
+
+        </h3>
+
+        <input
+            type="text"
+            id="displayName"
+            placeholder="Example: Dr. Musa"
+        >
+
+        <input
+            type="text"
+            id="displayName2"
+            placeholder="Second beneficiary (Admin only)"
+            class="hidden"
+        >
+
+        <button id="saveNameBtn">
+
+            Continue
+
+        </button>
+
+    </section>
+
+</section>
