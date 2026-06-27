@@ -561,3 +561,141 @@ textarea:focus{
     }
 
       }
+
+/*======================================
+  PREMIUM CARDS
+=======================================*/
+
+.notice-board,
+.terms-card,
+.auth-card,
+.beneficiary-card,
+.progress-card,
+.latest-selection,
+.status-card,
+.transparency-card,
+.admin-card,
+.about-card,
+.stat-card{
+
+    background:var(--surface);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    margin-bottom:24px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    border:1px solid var(--border);
+
+}
+
+.notice-board:hover,
+.terms-card:hover,
+.auth-card:hover,
+.beneficiary-card:hover,
+.progress-card:hover,
+.transparency-card:hover,
+.admin-card:hover,
+.about-card:hover,
+.stat-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-large);
+
+}
+
+/*======================================
+SECTION TITLES
+=======================================*/
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+.section-title h3{
+
+    color:var(--primary);
+
+    font-size:1.25rem;
+
+}
+
+.icon{
+
+    font-size:28px;
+
+}
+
+/*======================================
+NOTICE BOARD
+=======================================*/
+
+#noticeContent{
+
+    background:#FFFDF4;
+
+    border-left:5px solid var(--accent);
+
+    padding:18px;
+
+    border-radius:12px;
+
+    color:var(--text);
+
+}
+
+/*======================================
+TERMS BOX
+=======================================*/
+
+.terms-box{
+
+    max-height:240px;
+
+    overflow-y:auto;
+
+    background:#FAFBFD;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:18px;
+
+}
+
+.checkbox-row{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    margin-top:18px;
+
+}
+
+.checkbox-row input{
+
+    width:20px;
+
+    height:20px;
+
+    accent-color:var(--primary);
+
+}
