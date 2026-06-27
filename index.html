@@ -352,3 +352,318 @@ class="status-text">
 </div>
 
 </section>
+
+  <!-- ========================= -->
+<!-- DRAW PAGE                 -->
+<!-- ========================= -->
+
+<section
+id="drawPage"
+class="page">
+
+<div class="page-header">
+
+<h2>
+
+🎁 Contribution Draw
+
+</h2>
+
+<p>
+
+Choose one hidden month. Your selection cannot be changed after confirmation.
+
+</p>
+
+</div>
+
+<div class="progress-card">
+
+<h3>
+
+Draw Progress
+
+</h3>
+
+<div class="progress-bar">
+
+<div
+id="progressFill"
+class="progress-fill">
+
+</div>
+
+</div>
+
+<p id="progressText">
+
+0 of 10 months selected
+
+</p>
+
+</div>
+
+<div
+id="boxesContainer"
+class="boxes-grid">
+
+<!-- Month boxes created by draw.js -->
+
+</div>
+
+<div class="latest-selection">
+
+<h3>
+
+Latest Selection
+
+</h3>
+
+<div id="latestSelection">
+
+No month has been selected yet.
+
+</div>
+
+</div>
+
+<div class="status-card">
+
+<p id="drawStatus">
+
+Waiting for participants...
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- HALL OF TRANSPARENCY      -->
+<!-- ========================= -->
+
+<section
+id="transparencyPage"
+class="page">
+
+<div class="page-header">
+
+<h2>
+
+📋 Hall of Transparency
+
+</h2>
+
+<p>
+
+Every completed draw is permanently recorded below.
+
+</p>
+
+</div>
+
+<div class="transparency-card">
+
+<div id="selectionHistory">
+
+<p class="empty-message">
+
+No selections have been recorded yet.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- PARTICIPANT STATISTICS    -->
+<!-- ========================= -->
+
+<section
+id="statisticsPage"
+class="page">
+
+<div class="page-header">
+
+<h2>
+
+📊 Participant Statistics
+
+</h2>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<h3 id="totalParticipants">
+
+0
+
+</h3>
+
+<p>
+
+Participants
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3 id="monthsSelected">
+
+0
+
+</h3>
+
+<p>
+
+Months Selected
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h3 id="monthsRemaining">
+
+10
+
+</h3>
+
+<p>
+
+Months Remaining
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- ADMIN PAGE                -->
+<!-- ========================= -->
+
+<section
+id="adminPage"
+class="page hidden">
+
+<div class="page-header">
+
+<h2>
+
+👑 Administrator Dashboard
+
+</h2>
+
+<p>
+
+Manage the contribution draw securely.
+
+</p>
+
+</div>
+
+<div class="admin-card">
+
+<h3>
+
+Draw Management
+
+</h3>
+
+<button
+id="lockDrawBtn"
+class="primary-btn">
+
+🔒 Lock Draw
+
+</button>
+
+<button
+id="unlockDrawBtn"
+class="primary-btn">
+
+🔓 Unlock Draw
+
+</button>
+
+<button
+id="newDrawBtn"
+class="primary-btn">
+
+🆕 Start New Draw
+
+</button>
+
+<button
+id="resetDrawBtn"
+class="danger-btn">
+
+🔄 Reset Draw
+
+</button>
+
+</div>
+
+<div class="admin-card">
+
+<h3>
+
+Notice Board
+
+</h3>
+
+<textarea
+id="coordinatorNotes"
+rows="5"
+placeholder="Write an announcement..."></textarea>
+
+<button
+id="saveNotesBtn"
+class="primary-btn">
+
+Save Notice
+
+</button>
+
+</div>
+
+<div class="admin-card">
+
+<h3>
+
+Reports
+
+</h3>
+
+<button
+id="refreshStatsBtn"
+class="primary-btn">
+
+📈 Refresh Statistics
+
+</button>
+
+<button
+id="exportCsvBtn"
+class="primary-btn">
+
+📤 Export CSV
+
+</button>
+
+</div>
+
+  </section>
