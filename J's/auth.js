@@ -20,7 +20,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 // Administrator email
-const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL_HERE";
+const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
 
 // Current logged-in user
 let currentUser = null;
