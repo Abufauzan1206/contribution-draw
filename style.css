@@ -1,65 +1,249 @@
+/*==================================================
+  Contribution Draw v1.0 Premium UI
+  ABUFAUZAN TECH
+  Building Secure Digital Solutions.
+==================================================*/
+
+/*==========================
+  DESIGN SYSTEM
+==========================*/
+
+:root{
+
+    --primary:#1565C0;
+    --primary-dark:#0D47A1;
+    --primary-light:#42A5F5;
+
+    --accent:#FFC107;
+    --accent-dark:#FFB300;
+
+    --success:#2E7D32;
+    --warning:#FB8C00;
+    --danger:#D32F2F;
+
+    --background:#F4F7FC;
+    --surface:#FFFFFF;
+
+    --text:#263238;
+    --text-light:#607D8B;
+
+    --border:#E3EAF3;
+
+    --radius-small:10px;
+    --radius:18px;
+    --radius-large:28px;
+
+    --shadow-small:0 4px 12px rgba(0,0,0,.08);
+    --shadow:0 10px 28px rgba(0,0,0,.12);
+    --shadow-large:0 18px 40px rgba(0,0,0,.16);
+
+    --transition:.30s ease;
+
+}
+
+/*==========================
+  RESET
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: #f4f6f8;
+
+    font-family:"Poppins",sans-serif;
+
+    background:
+    linear-gradient(
+    180deg,
+    #EEF5FF,
+    #F8FBFF);
+
+    color:var(--text);
+
+    line-height:1.6;
+
 }
 
-h1{
-    text-align:center;
+/*==========================
+  UTILITIES
+==========================*/
+
+.hidden{
+    display:none!important;
 }
 
-#termsBox,
-#userSection{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:20px;
+.page{
+    display:none;
 }
 
-#boxesContainer{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-    gap:15px;
-    margin-top:20px;
+.page.active{
+    display:block;
 }
 
-.box{
-    background:white;
-    border:2px solid #333;
-    border-radius:10px;
-    padding:25px;
-    text-align:center;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.box:hover{
-    transform:scale(1.03);
-}
-
-.taken{
-    background:#ddd;
-    cursor:not-allowed;
+img{
+    max-width:100%;
 }
 
 button{
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
+    font-family:inherit;
 }
 
-input[type="text"]{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
+input,
+textarea{
+    font-family:inherit;
 }
 
-.adminMark{
-    color:red;
-    font-size:12px;
-    display:block;
-    margin-top:5px;
+/*==========================
+  MAIN APP
+==========================*/
+
+#app{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:18px;
+
 }
+
+/*==========================
+  SPLASH SCREEN
+==========================*/
+
+#splashScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-dark));
+
+    color:white;
+
+    z-index:9999;
+
+}
+
+.splash-content{
+
+    text-align:center;
+
+    animation:fadeUp .9s ease;
+
+}
+
+#logo{
+
+    width:95px;
+
+    margin-bottom:20px;
+
+}
+
+.tagline{
+
+    color:#FFE082;
+
+    margin-top:10px;
+
+    font-weight:600;
+
+}
+
+.powered{
+
+    margin-top:30px;
+
+    opacity:.9;
+
+}
+
+.motto{
+
+    margin-top:8px;
+
+    opacity:.8;
+
+}
+
+/*==========================
+  HEADER
+==========================*/
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px;
+
+    border-radius:var(--radius);
+
+    background:
+
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light));
+
+    color:white;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:20px;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.header-logo{
+
+    width:60px;
+
+}
+
+.brand h1{
+
+    font-size:1.6rem;
+
+    font-weight:700;
+
+}
+
+.brand p{
+
+    font-size:.9rem;
+
+    opacity:.9;
+
+    }
