@@ -84,3 +84,81 @@ navButtons.forEach(button => {
     });
 
 });
+
+// =======================================
+// Firebase Authentication
+// =======================================
+
+const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
+
+const googleSignInBtn = document.getElementById("googleSignInBtn");
+const signOutBtn = document.getElementById("signOutBtn");
+const agreeTerms = document.getElementById("agreeTerms");
+const userGreeting = document.getElementById("userGreeting");
+const adminNav = document.getElementById("adminNav");
+const userSection = document.getElementById("userSection");
+
+const provider = new GoogleAuthProvider();
+
+googleSignInBtn.addEventListener("click", async () => {
+
+    if (!agreeTerms.checked) {
+        alert("Please accept the Terms & Conditions first.");
+        return;
+    }
+
+    try {
+
+        await signInWithPopup(auth, provider);
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+});
+
+signOutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+});
+
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        googleSignInBtn.classList.add("hidden");
+        signOutBtn.classList.remove("hidden");
+
+        userGreeting.classList.remove("hidden");
+        userGreeting.textContent =
+            "Welcome, " + user.displayName;
+
+        userSection.classList.remove("hidden");
+
+        if (
+            user.email &&
+            user.email.toLowerCase() ===
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            adminNav.classList.remove("hidden");
+
+        }
+
+    } else {
+
+        googleSignInBtn.classList.remove("hidden");
+        signOutBtn.classList.add("hidden");
+
+        userGreeting.classList.add("hidden");
+
+        userSection.classList.add("hidden");
+
+        adminNav.classList.add("hidden");
+
+    }
+
+});
