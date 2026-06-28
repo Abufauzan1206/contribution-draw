@@ -95,6 +95,9 @@ const agreeTerms = document.getElementById("agreeTerms");
 const userGreeting = document.getElementById("userGreeting");
 const adminNav = document.getElementById("adminNav");
 const userSection = document.getElementById("userSection");
+const displayName = document.getElementById("displayName");
+const saveNameBtn = document.getElementById("saveNameBtn");
+const saveStatus = document.getElementById("saveStatus");
 
 const provider = new GoogleAuthProvider();
 
