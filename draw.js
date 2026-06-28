@@ -2,7 +2,28 @@
 // Contribution Draw v1.0
 // Draw Engine - Part 1
 // =======================================
-alert(document.getElementById("boxesContainer"));
+import { auth, db } from "./firebase.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+const MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November"
+];
 const MONTHS = [
     "January",
     "February",
