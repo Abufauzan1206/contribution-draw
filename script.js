@@ -12,8 +12,8 @@ import {
 
 const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
 
-const googleBtn = document.getElementById("googleBtn");
-const agreeBox = document.getElementById("agreeBox");
+const googleBtn = document.getElementById("googleSignInBtn");
+const agreeBox = document.getElementById("agreeTerms");
 const userSection = document.getElementById("userSection");
 const displayNameInput = document.getElementById("displayName");
 const saveNameBtn = document.getElementById("saveNameBtn");
