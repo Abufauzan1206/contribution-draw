@@ -1,104 +1,77 @@
-alert("Contribution Draw starting");
+// =======================================
+// Contribution Draw v1.0
+// Phase 1A
+// Splash Screen + Navigation
+// =======================================
 
-import {
-  auth
-} from "./firebase.js";
+// Pages
+const pages = {
+    home: document.getElementById("homePage"),
+    draw: document.getElementById("drawPage"),
+    transparency: document.getElementById("transparencyPage"),
+    statistics: document.getElementById("statisticsPage"),
+    admin: document.getElementById("adminPage"),
+    about: document.getElementById("aboutPage")
+};
 
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+// Main Containers
+const splashScreen = document.getElementById("splashScreen");
+const app = document.getElementById("app");
 
-const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
+// Navigation Buttons
+const navButtons =
+document.querySelectorAll(".nav-btn");
 
-const googleBtn = document.getElementById("googleSignInBtn");
-const agreeBox = document.getElementById("agreeTerms");
-const userSection = document.getElementById("userSection");
-const displayNameInput = document.getElementById("displayName");
-const saveNameBtn = document.getElementById("saveNameBtn");
+// =======================================
+// Splash Screen
+// =======================================
 
-let currentUser = null;
-let isAdmin = false;
+window.addEventListener("load", () => {
 
-onAuthStateChanged(auth, (user) => {
+    setTimeout(() => {
 
-  if (!user) return;
+        splashScreen.style.display = "none";
 
-  currentUser = user;
+        app.classList.remove("hidden");
 
-  isAdmin =
-    user.email.toLowerCase() ===
-    ADMIN_EMAIL.toLowerCase();
-
-  userSection.style.display = "block";
-
-  if (isAdmin) {
-
-    document.getElementById("nameTitle").innerText =
-      "Enter Two Beneficiary Names";
-
-    document.getElementById("displayName2").style.display =
-      "block";
-
-  }
-
-  alert("Signed in as " + user.email);
+    }, 2000);
 
 });
 
-googleBtn.addEventListener("click", async () => {
+// =======================================
+// Navigation
+// =======================================
 
-  if (!agreeBox.checked) {
-    alert("Please accept the Terms and Conditions first.");
-    return;
-  }
+function showPage(pageName) {
 
-  try {
+    Object.values(pages).forEach(page => {
 
-    const provider = new GoogleAuthProvider();
+        page.classList.remove("active");
 
-    await signInWithPopup(auth, provider);
+    });
 
-  } catch (error) {
+    pages[pageName].classList.add("active");
 
-    alert(error.message);
+    navButtons.forEach(button => {
 
-  }
+        button.classList.remove("active");
 
-});
+        if (button.dataset.page === pageName) {
 
-saveNameBtn.addEventListener("click", () => {
+            button.classList.add("active");
 
-  const name1 = displayNameInput.value.trim();
+        }
 
-if (!name1) {
-  alert("Please enter a beneficiary name.");
-  return;
-}
-
-if (isAdmin) {
-
-  const name2 =
-    document.getElementById("displayName2")
-    .value.trim();
-
-  if (!name2) {
-    alert("Please enter the second beneficiary name.");
-    return;
-  }
-
-  alert(
-    "Admin names saved:\n" +
-    name1 +
-    "\n" +
-    name2
-  );
-
-} else {
-
-  alert("Name saved: " + name1);
+    });
 
 }
+
+navButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        showPage(button.dataset.page);
+
+    });
 
 });
