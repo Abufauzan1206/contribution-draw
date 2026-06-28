@@ -139,6 +139,22 @@ onAuthStateChanged(auth, (user) => {
 
         userSection.classList.remove("hidden");
 
+      const userDoc = doc(db, "participants", user.uid);
+
+const userSnap = await getDoc(userDoc);
+
+if (userSnap.exists()) {
+
+    displayName.value = userSnap.data().beneficiaryName;
+
+    displayName.disabled = true;
+
+    saveNameBtn.disabled = true;
+
+    saveStatus.textContent =
+        "Beneficiary name already saved.";
+
+}
         if (
             user.email &&
             user.email.toLowerCase() ===
