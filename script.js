@@ -10,6 +10,8 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
+const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
+
 const googleBtn = document.getElementById("googleBtn");
 const agreeBox = document.getElementById("agreeBox");
 const userSection = document.getElementById("userSection");
