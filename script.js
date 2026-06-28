@@ -1,12 +1,14 @@
 alert("Contribution Draw starting");
 
 import {
-  getAuth,
+  auth
+} from "./firebase.js";
+
+import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 const auth = getAuth(app);
 
 const googleBtn = document.getElementById("googleBtn");
