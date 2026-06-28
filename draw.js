@@ -75,7 +75,3 @@ createDrawBoxes(function createDrawBoxes() {
         `;
 
         boxesContainer.appendChild(box);
-
-    });
-
-}
