@@ -134,6 +134,53 @@ onAuthStateChanged(auth, async (user) => {
         signOutBtn.classList.remove("hidden");
 
         userGreeting.classList.remove("hidden");
+    saveNameBtn.addEventListener("click", async () => {
+
+    const name = displayName.value.trim();
+
+    if (!name) {
+
+        alert("Please enter a beneficiary name.");
+
+        return;
+
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please sign in first.");
+
+        return;
+
+    }
+
+    try {
+
+        await setDoc(doc(db, "participants", user.uid), {
+
+            beneficiaryName: name,
+            email: user.email,
+            uid: user.uid,
+            createdAt: new Date().toISOString()
+
+        });
+
+        saveStatus.textContent =
+            "Beneficiary name saved successfully.";
+
+        displayName.disabled = true;
+
+        saveNameBtn.disabled = true;
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+});
         userGreeting.textContent =
             "Welcome, " + user.displayName;
 
