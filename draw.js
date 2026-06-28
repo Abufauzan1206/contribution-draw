@@ -3,8 +3,6 @@
 // Draw Engine - Part 1
 // =======================================
 
-alert("NEW DRAW.JS LOADED");
-
 const MONTHS = [
     "January",
     "February",
