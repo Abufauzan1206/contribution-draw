@@ -44,4 +44,36 @@ function createDrawBoxes() {
 
 }
 
-createDrawBoxes();
+createDrawBoxes(function createDrawBoxes() {
+
+    boxesContainer.innerHTML = "";
+
+    MONTHS.forEach((month, index) => {
+
+        const box = document.createElement("button");
+
+        box.className = "month-box";
+
+        box.dataset.month = month;
+
+        box.innerHTML = `
+            <div class="gift-icon">🎁</div>
+
+            <div class="box-number">
+                Box ${index + 1}
+            </div>
+
+            <div class="box-question">
+                ?
+            </div>
+
+            <div class="box-footer">
+                Tap to Draw
+            </div>
+        `;
+
+        boxesContainer.appendChild(box);
+
+    });
+
+});
