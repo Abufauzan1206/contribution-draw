@@ -138,6 +138,24 @@ onAuthStateChanged(auth, async (user) => {
             "Welcome, " + user.displayName;
 
         userSection.classList.remove("hidden");
+      const userDoc = doc(db, "participants", user.uid);
+
+const userSnap = await getDoc(userDoc);
+
+if (userSnap.exists()) {
+
+    const data = userSnap.data();
+
+    displayName.value = data.beneficiaryName;
+
+    displayName.disabled = true;
+
+    saveNameBtn.disabled = true;
+
+    saveStatus.textContent =
+        "Beneficiary name already saved.";
+
+}
 
       const userDoc = doc(db, "participants", user.uid);
 
