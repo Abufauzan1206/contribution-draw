@@ -1,3 +1,12 @@
+import { auth } from "./firebase.js";
+
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
 // =======================================
 // Contribution Draw v1.0
 // Phase 1A
