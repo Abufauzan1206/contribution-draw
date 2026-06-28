@@ -27,7 +27,7 @@ const app = document.getElementById("app");
 
 // Navigation Buttons
 const navButtons =
-document.querySelectorAll(".nav-btn");
+document.querySelectorAll(".nav-btn"); 
 
 // =======================================
 // Splash Screen
