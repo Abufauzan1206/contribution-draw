@@ -44,24 +44,24 @@ window.addEventListener("load", () => {
 
 function showPage(pageName) {
 
-    Object.values(pages).forEach(page => {
-
+    document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
-
+        page.classList.add("hidden");
     });
 
-    pages[pageName].classList.add("active");
+    const selectedPage = document.getElementById(pageName + "Page");
+
+    if (selectedPage) {
+        selectedPage.classList.remove("hidden");
+        selectedPage.classList.add("active");
+    }
 
     navButtons.forEach(button => {
-
         button.classList.remove("active");
 
         if (button.dataset.page === pageName) {
-
             button.classList.add("active");
-
         }
-
     });
 
 }
