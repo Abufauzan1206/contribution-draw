@@ -78,4 +78,4 @@ createDrawBoxes(function createDrawBoxes() {
 
     });
 
-});
+}
