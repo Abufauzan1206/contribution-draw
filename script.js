@@ -254,3 +254,72 @@ onAuthStateChanged(auth, async (user) => {
     }
 
 });
+
+// =======================================
+// Save Beneficiary Name
+// =======================================
+
+saveNameBtn.addEventListener("click", async () => {
+
+    const beneficiaryName = displayName.value.trim();
+
+    if (!beneficiaryName) {
+
+        alert("Please enter a beneficiary name.");
+
+        return;
+
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please sign in first.");
+
+        return;
+
+    }
+
+    try {
+
+        const participantRef =
+            doc(db, "participants", user.uid);
+
+        await setDoc(participantRef, {
+
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            beneficiaryName: beneficiaryName,
+
+            // Reserved for Phase 3
+            selectedMonth: null,
+
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+
+        });
+
+        displayName.disabled = true;
+
+        saveNameBtn.disabled = true;
+
+        saveStatus.textContent =
+            "✅ Beneficiary name saved successfully.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Failed to save beneficiary name.");
+
+    }
+
+});
+
+// =======================================
+// End of Phase 2
+// =======================================
+
+console.log("Contribution Draw v1.0 loaded successfully.");
