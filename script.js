@@ -126,3 +126,131 @@ navButtons.forEach(button => {
     });
 
 });
+
+// =======================================
+// Google Authentication
+// =======================================
+
+googleSignInBtn.addEventListener("click", async () => {
+
+    if (!agreeTerms.checked) {
+
+        alert("Please accept the Terms & Conditions first.");
+
+        return;
+
+    }
+
+    try {
+
+        await signInWithPopup(auth, provider);
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+});
+
+// =======================================
+// Sign Out
+// =======================================
+
+signOutBtn.addEventListener("click", async () => {
+
+    try {
+
+        await signOut(auth);
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+});
+
+// =======================================
+// Authentication State
+// =======================================
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        googleSignInBtn.classList.remove("hidden");
+        signOutBtn.classList.add("hidden");
+
+        userGreeting.classList.add("hidden");
+        userSection.classList.add("hidden");
+        adminNav.classList.add("hidden");
+
+        displayName.value = "";
+        displayName.disabled = false;
+        saveNameBtn.disabled = false;
+        saveStatus.textContent = "";
+
+        return;
+
+    }
+
+    // User signed in
+
+    googleSignInBtn.classList.add("hidden");
+    signOutBtn.classList.remove("hidden");
+
+    userGreeting.classList.remove("hidden");
+    userGreeting.textContent = `Welcome, ${user.displayName}`;
+
+    userSection.classList.remove("hidden");
+
+    // Admin check
+
+    if (
+        user.email &&
+        user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+    ) {
+
+        adminNav.classList.remove("hidden");
+
+    } else {
+
+        adminNav.classList.add("hidden");
+
+    }
+
+    // Load participant
+
+    try {
+
+        const participantRef =
+            doc(db, "participants", user.uid);
+
+        const participantSnap =
+            await getDoc(participantRef);
+
+        if (participantSnap.exists()) {
+
+            const data = participantSnap.data();
+
+            displayName.value =
+                data.beneficiaryName || "";
+
+            displayName.disabled = true;
+
+            saveNameBtn.disabled = true;
+
+            saveStatus.textContent =
+                "Beneficiary name already saved.";
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+});
