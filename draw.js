@@ -2,7 +2,7 @@
 // Contribution Draw v1.0
 // Draw Engine - Part 1
 // =======================================
-
+alert(document.getElementById("boxesContainer"));
 const MONTHS = [
     "January",
     "February",
