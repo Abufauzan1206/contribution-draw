@@ -126,7 +126,7 @@ signOutBtn.addEventListener("click", async () => {
 
 });
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
     if (user) {
 
