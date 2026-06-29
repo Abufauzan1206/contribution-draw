@@ -53,7 +53,7 @@ function createDrawBoxes() {
 createDrawBoxes();
 
 // =======================================
-// DRAW ENGINE MODULE 1
+// DRAW ENGINE MODULE 2
 // =======================================
 
 async function checkDrawEligibility() {
