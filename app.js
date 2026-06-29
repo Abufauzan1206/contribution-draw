@@ -75,7 +75,7 @@ googleBtn.addEventListener("click", async () => {
 
 });
 
-saveNameBtn.addEventListener("click", () => {
+saveNameBtn.addEventListener("click", async () => {
 
   const name1 = displayNameInput.value.trim();
 
