@@ -59,3 +59,53 @@ function createDrawBoxes() {
 }
 
 createDrawBoxes();
+
+// =======================================
+// MODULE 1 - DRAW FOUNDATION
+// =======================================
+
+async function canUserDraw() {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert("Please sign in first.");
+        return false;
+    }
+
+    const userDoc = await getDoc(doc(db, "participants", user.uid));
+
+    if (!userDoc.exists()) {
+        alert("Please save your beneficiary name first.");
+        return false;
+    }
+
+    const data = userDoc.data();
+
+    if (data.month) {
+        alert("You have already selected a month.");
+        return false;
+    }
+
+    return true;
+}
+
+function attachBoxEvents() {
+
+    document.querySelectorAll(".month-box").forEach(box => {
+
+        box.addEventListener("click", async () => {
+
+            const allowed = await canUserDraw();
+
+            if (!allowed) return;
+
+            alert("✅ Draw engine ready.\n\nNext module will assign your month.");
+
+        });
+
+    });
+
+}
+
+attachBoxEvents();
