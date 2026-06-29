@@ -1,3 +1,8 @@
+// =======================================
+// Contribution Draw v1.0
+// Draw Engine (Compatible Module)
+// =======================================
+
 import { auth, db } from "./firebase.js";
 
 import {
@@ -7,9 +12,9 @@ import {
     setDoc,
     collection
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
 // =======================================
-// Contribution Draw v1.0
-// Draw Engine - Part 1
+// MATCH EXISTING STRUCTURE (DO NOT MODIFY)
 // =======================================
 
 const MONTHS = [
@@ -25,9 +30,88 @@ const MONTHS = [
     "November"
 ];
 
-const boxesContainer = document.getElementById("boxesContainer");
+// =======================================
+// DOM ELEMENTS (SAFE BINDING)
+// =======================================
 
-function createDrawBoxes() {
+const boxesContainer = document.getElementById("boxesContainer");
+const latestSelection = document.getElementById("latestSelection");
+const progressText = document.getElementById("progressText");
+const progressFill = document.getElementById("progressFill");
+
+// =======================================
+// FIRESTORE HELPERS
+// =======================================
+
+async function getParticipants() {
+    const snap = await getDocs(collection(db, "participants"));
+
+    const list = [];
+    snap.forEach(docSnap => {
+        list.push(docSnap.data());
+    });
+
+    return list;
+}
+
+async function getTakenMonths() {
+    const participants = await getParticipants();
+
+    return participants
+        .map(p => p.selectedMonth)
+        .filter(Boolean);
+}
+
+async function getAvailableMonths() {
+    const taken = await getTakenMonths();
+    return MONTHS.filter(m => !taken.includes(m));
+}
+
+// =======================================
+// ELIGIBILITY CHECK (MATCH SCRIPT.JS LOGIC)
+// =======================================
+
+async function checkEligibility() {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert("Please sign in first.");
+        return false;
+    }
+
+    const ref = doc(db, "participants", user.uid);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+        alert("Please save your beneficiary name first.");
+        return false;
+    }
+
+    const data = snap.data();
+
+    if (!data.beneficiaryName) {
+        alert("Please save your beneficiary name first.");
+        return false;
+    }
+
+    if (data.selectedMonth) {
+        alert("You have already selected a month.");
+        return false;
+    }
+
+    return true;
+}
+
+// =======================================
+// RENDER BOXES
+// =======================================
+
+async function renderBoxes() {
+
+    if (!boxesContainer) return;
+
+    const taken = await getTakenMonths();
 
     boxesContainer.innerHTML = "";
 
@@ -36,147 +120,101 @@ function createDrawBoxes() {
         const box = document.createElement("button");
 
         box.className = "month-box";
-
         box.dataset.month = month;
+
+        const isTaken = taken.includes(month);
+
+        if (isTaken) {
+            box.classList.add("locked");
+            box.disabled = true;
+        }
 
         box.innerHTML = `
             <div class="gift-icon">🎁</div>
-            <div class="box-question">?</div>
+            <div class="box-question">${isTaken ? "X" : "?"}</div>
             <div class="box-number">Box ${index + 1}</div>
-            <div class="box-footer">Tap to Draw</div>
+            <div class="box-footer">
+                ${isTaken ? "Taken" : "Tap to Draw"}
+            </div>
         `;
 
-        boxesContainer.appendChild(box);
+        box.addEventListener("click", () => handleDraw(month));
 
+        boxesContainer.appendChild(box);
     });
 
+    updateProgress(taken.length);
 }
 
-createDrawBoxes();
-
 // =======================================
-// DRAW ENGINE MODULE 2
+// HANDLE DRAW ACTION
 // =======================================
 
-async function checkDrawEligibility() {
+async function handleDraw(month) {
+
+    const ok = await checkEligibility();
+    if (!ok) return;
 
     const user = auth.currentUser;
 
-    if (!user) {
+    const available = await getAvailableMonths();
 
-        alert("Please sign in first.");
-
-        return false;
-
+    if (!available.includes(month)) {
+        alert("❌ This month is already taken.");
+        renderBoxes();
+        return;
     }
 
-    const participantRef =
-        doc(db, "participants", user.uid);
+    try {
 
-    const participantSnap =
-        await getDoc(participantRef);
+        const ref = doc(db, "participants", user.uid);
 
-    if (!participantSnap.exists()) {
+        await setDoc(ref, {
+            selectedMonth: month,
+            updatedAt: new Date().toISOString()
+        }, { merge: true });
 
-        alert("Please save your beneficiary name first.");
+        if (latestSelection) {
+            latestSelection.innerHTML =
+                `🎉 You selected <strong>${month}</strong>`;
+        }
 
-        return true;
+        alert("🎉 Draw successful: " + month);
 
+        renderBoxes();
+
+    } catch (err) {
+        console.error(err);
+        alert("Draw failed. Please try again.");
+    }
 }
 
 // =======================================
-// AVAILABLE MONTHS
+// PROGRESS UPDATE
 // =======================================
 
-async function getAvailableMonths() {
+function updateProgress(selectedCount) {
 
-    const snapshot =
-        await getDocs(collection(db, "participants"));
+    if (!progressText || !progressFill) return;
 
-    const takenMonths = [];
+    const total = MONTHS.length;
 
-    snapshot.forEach(docSnap => {
+    progressText.textContent =
+        `${selectedCount} of ${total} months selected`;
 
-        const data = docSnap.data();
-
-        if (data.selectedMonth) {
-
-            takenMonths.push(data.selectedMonth);
-
-        }
-
-    });
-
-    return MONTHS.filter(month =>
-        !takenMonths.includes(month)
-    );
-
+    progressFill.style.width =
+        (selectedCount / total) * 100 + "%";
 }
 
-function initialiseDrawEngine() {
+// =======================================
+// INIT (SAFE AUTO START)
+// =======================================
 
-    document.querySelectorAll(".month-box")
-        .forEach(box => {
-
-            box.addEventListener("click", async () => {
-
-                const eligible =
-                    await checkDrawEligibility();
-
-                if (!eligible) return;
-
-                alert(
-                    "✅ Eligibility confirmed.\n\nReady for the draw."
-                );
-
-            });
-
-        });
-
-}
-function initialiseDrawEngine() {
-    document.querySelectorAll(".month-box")
-        .forEach(box => {
-
-           box.addEventListener("click", async () => {
-
-const eligible =
-    await checkDrawEligibility();
-               async function getAvailableMonths() {
-
-    const snapshot =
-        await getDocs(collection(db, "participants"));
-
-    const takenMonths = [];
-
-    snapshot.forEach(docSnap => {
-
-        const data = docSnap.data();
-
-        if (data.selectedMonth) {
-
-            takenMonths.push(data.selectedMonth);
-
-        }
-
-    });
-
-    return MONTHS.filter(month =>
-        !takenMonths.includes(month)
-    );
-
-               }
-
-if (!eligible) return;
-
-alert(
-    "✅ Eligibility confirmed.\n\nReady for the draw."
-);
-
-            });
-
-        });
-
+function initDraw() {
+    renderBoxes();
 }
 
-initialiseDrawEngine();
+// wait for DOM + auth readiness indirectly
+window.addEventListener("load", () => {
+    initDraw();
+});
