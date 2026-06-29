@@ -113,9 +113,6 @@ function initialiseDrawEngine() {
 
            box.addEventListener("click", async () => {
 
-                const eligible =
-    await checkDrawEligibility();
-
 const eligible =
     await checkDrawEligibility();
 
