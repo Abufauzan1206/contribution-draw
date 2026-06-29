@@ -40,7 +40,7 @@ onAuthStateChanged(auth, (user) => {
 
   userSection.style.display = "block";
 
-  if (isAdmin) {
+  if (isAdmin) {alert("Admin detected");
 
     document.getElementById("nameTitle").innerText =
       "Enter Two Beneficiary Names";
