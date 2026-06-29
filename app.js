@@ -104,14 +104,23 @@ if (isAdmin) {
 
 } else {
 
-  await addDoc(collection(db, "participants"), {
-  name: name1,
-  email: currentUser.email,
-  uid: currentUser.uid,
-  createdAt: serverTimestamp()
-});
+  try {
 
-alert("Name saved successfully!");
+  await addDoc(collection(db, "participants"), {
+    name: name1,
+    email: currentUser.email,
+    uid: currentUser.uid,
+    createdAt: serverTimestamp()
+  });
+
+  alert("Name saved successfully!");
+
+} catch (error) {
+
+  alert("Firestore error: " + error.message);
+  console.error(error);
+
+}
 
 }
 
