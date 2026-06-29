@@ -56,10 +56,11 @@ createDrawBoxes();
 // DRAW ENGINE MODULE 1
 // =======================================
 
-function checkDrawEligibility() {
+async function checkDrawEligibility() {
 
-    // User signed in?
-    if (!auth.currentUser) {
+    const user = auth.currentUser;
+
+    if (!user) {
 
         alert("Please sign in first.");
 
@@ -67,13 +68,37 @@ function checkDrawEligibility() {
 
     }
 
-    // Beneficiary name saved?
-    if (
-        !displayName ||
-        displayName.value.trim() === ""
-    ) {
+    const participantRef =
+        doc(db, "participants", user.uid);
+
+    const participantSnap =
+        await getDoc(participantRef);
+
+    if (!participantSnap.exists()) {
 
         alert("Please save your beneficiary name first.");
+
+        return false;
+
+    }
+
+    const participant =
+        participantSnap.data();
+
+    if (!participant.beneficiaryName) {
+
+        alert("Please save your beneficiary name first.");
+
+        return false;
+
+    }
+
+    if (participant.selectedMonth) {
+
+        alert(
+            "You have already selected " +
+            participant.selectedMonth
+        );
 
         return false;
 
@@ -82,9 +107,6 @@ function checkDrawEligibility() {
     return true;
 
 }
-
-function initialiseDrawEngine() {
-
     document.querySelectorAll(".month-box")
         .forEach(box => {
 
