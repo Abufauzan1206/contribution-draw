@@ -138,3 +138,32 @@ async function checkDrawEligibility() {
     return true;
 
     }
+
+// =======================================
+// Get Available Months
+// =======================================
+
+async function getAvailableMonths() {
+
+    const snapshot =
+        await getDocs(collection(db, "participants"));
+
+    const takenMonths = [];
+
+    snapshot.forEach(docSnap => {
+
+        const data = docSnap.data();
+
+        if (data.selectedMonth) {
+
+            takenMonths.push(data.selectedMonth);
+
+        }
+
+    });
+
+    return MONTHS.filter(month =>
+        !takenMonths.includes(month)
+    );
+
+}
