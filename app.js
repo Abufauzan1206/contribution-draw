@@ -104,7 +104,14 @@ if (isAdmin) {
 
 } else {
 
-  alert("Name saved: " + name1);
+  await addDoc(collection(db, "participants"), {
+  name: name1,
+  email: currentUser.email,
+  uid: currentUser.uid,
+  createdAt: serverTimestamp()
+});
+
+alert("Name saved successfully!");
 
 }
 
