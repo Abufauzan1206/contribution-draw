@@ -107,6 +107,7 @@ async function checkDrawEligibility() {
     return true;
 
 }
+function initialiseDrawEngine() {
     document.querySelectorAll(".month-box")
         .forEach(box => {
 
