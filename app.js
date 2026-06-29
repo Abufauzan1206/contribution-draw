@@ -38,6 +38,7 @@ onAuthStateChanged(auth, (user) => {
   isAdmin =
     user.email.toLowerCase() ===
     ADMIN_EMAIL.toLowerCase();
+  alert("isAdmin = " + isAdmin);
 
   userSection.style.display = "block";
 
