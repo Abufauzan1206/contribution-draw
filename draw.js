@@ -82,3 +82,59 @@ function createDrawBoxes() {
 }
 
 createDrawBoxes();
+
+// =======================================
+// Check Draw Eligibility
+// =======================================
+
+async function checkDrawEligibility() {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please sign in with Google first.");
+
+        return false;
+
+    }
+
+    const participantRef =
+        doc(db, "participants", user.uid);
+
+    const participantSnap =
+        await getDoc(participantRef);
+
+    if (!participantSnap.exists()) {
+
+        alert("Please save your beneficiary name first.");
+
+        return false;
+
+    }
+
+    const participant =
+        participantSnap.data();
+
+    if (!participant.beneficiaryName) {
+
+        alert("Please save your beneficiary name first.");
+
+        return false;
+
+    }
+
+    if (participant.selectedMonth) {
+
+        alert(
+            "You have already selected " +
+            participant.selectedMonth
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+    }
