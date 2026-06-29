@@ -163,8 +163,12 @@ async function getAvailableMonths() {
     });
 
     return MONTHS.filter(month =>
-        !takenMonths.includes(month)
-    );
+
+    month !== "June" &&
+
+    !takenMonths.includes(month)
+
+);
 
 }
 
