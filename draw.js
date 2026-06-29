@@ -167,3 +167,53 @@ async function getAvailableMonths() {
     );
 
 }
+
+// =======================================
+// Assign Random Month
+// =======================================
+
+async function assignRandomMonth() {
+
+    const user = auth.currentUser;
+
+    if (!user) return null;
+
+    const availableMonths =
+        await getAvailableMonths();
+
+    if (availableMonths.length === 0) {
+
+        alert("All months have already been assigned.");
+
+        return null;
+
+    }
+
+    const randomIndex =
+        Math.floor(Math.random() * availableMonths.length);
+
+    const selectedMonth =
+        availableMonths[randomIndex];
+
+    const participantRef =
+        doc(db, "participants", user.uid);
+
+    const participantSnap =
+        await getDoc(participantRef);
+
+    const participant =
+        participantSnap.data();
+
+    await setDoc(participantRef, {
+
+        ...participant,
+
+        selectedMonth: selectedMonth,
+
+        updatedAt: new Date().toISOString()
+
+    });
+
+    return selectedMonth;
+
+}
