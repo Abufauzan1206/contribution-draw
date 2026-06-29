@@ -1,3 +1,10 @@
+import { auth, db } from "./firebase.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
 // =======================================
 // Contribution Draw v1.0
 // Draw Engine - Part 1
