@@ -19,16 +19,16 @@ import {
 // =======================================
 
 const MONTHS = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
+    "June",      // Reserved for Admin
     "July",
     "August",
     "September",
     "October",
-    "November"
+    "November",
+    "December",
+    "January",
+    "February",
+    "March"
 ];
 
 // =======================================
