@@ -111,7 +111,7 @@ function initialiseDrawEngine() {
     document.querySelectorAll(".month-box")
         .forEach(box => {
 
-            box.addEventListener("click", () => {
+           box.addEventListener("click", async () => {
 
                 if (!checkDrawEligibility()) return;
 
