@@ -117,6 +117,30 @@ function initialiseDrawEngine() {
 
 const eligible =
     await checkDrawEligibility();
+               async function getAvailableMonths() {
+
+    const snapshot =
+        await getDocs(collection(db, "participants"));
+
+    const takenMonths = [];
+
+    snapshot.forEach(docSnap => {
+
+        const data = docSnap.data();
+
+        if (data.selectedMonth) {
+
+            takenMonths.push(data.selectedMonth);
+
+        }
+
+    });
+
+    return MONTHS.filter(month =>
+        !takenMonths.includes(month)
+    );
+
+               }
 
 if (!eligible) return;
 
