@@ -217,3 +217,51 @@ async function assignRandomMonth() {
     return selectedMonth;
 
 }
+
+// =======================================
+// Initialise Draw Engine
+// =======================================
+
+function initialiseDrawEngine() {
+
+    document.querySelectorAll(".month-box")
+        .forEach(box => {
+
+            box.addEventListener("click", async () => {
+
+                const eligible =
+                    await checkDrawEligibility();
+
+                if (!eligible) return;
+
+                const selectedMonth =
+                    await assignRandomMonth();
+
+                if (!selectedMonth) return;
+
+                alert(
+                    "🎉 Congratulations!\n\nYour assigned month is:\n\n" +
+                    selectedMonth
+                );
+
+                if (latestSelection) {
+
+                    latestSelection.textContent =
+                        selectedMonth;
+
+                }
+
+                if (drawStatus) {
+
+                    drawStatus.textContent =
+                        "✅ Draw completed successfully.";
+
+                }
+
+            });
+
+        });
+
+}
+
+initialiseDrawEngine();
