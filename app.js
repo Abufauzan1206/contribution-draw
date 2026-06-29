@@ -33,6 +33,7 @@ onAuthStateChanged(auth, (user) => {
   if (!user) return;
 
   currentUser = user;
+  alert("Logged in as: " + user.email);
 
   isAdmin =
     user.email.toLowerCase() ===
