@@ -23,7 +23,7 @@ import {
 // Constants
 // =======================================
 
-const ADMIN_EMAIL = "ababdussalam1206@gmail.com";
+const ADMIN_EMAIL = "abufauzan1206@gmail.com";
 
 const provider = new GoogleAuthProvider();
 
