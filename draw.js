@@ -80,33 +80,58 @@ async function checkDrawEligibility() {
 
         alert("Please save your beneficiary name first.");
 
-        return false;
+        return true;
 
-    }
+}
 
-    const participant =
-        participantSnap.data();
+// =======================================
+// AVAILABLE MONTHS
+// =======================================
 
-    if (!participant.beneficiaryName) {
+async function getAvailableMonths() {
 
-        alert("Please save your beneficiary name first.");
+    const snapshot =
+        await getDocs(collection(db, "participants"));
 
-        return false;
+    const takenMonths = [];
 
-    }
+    snapshot.forEach(docSnap => {
 
-    if (participant.selectedMonth) {
+        const data = docSnap.data();
 
-        alert(
-            "You have already selected " +
-            participant.selectedMonth
-        );
+        if (data.selectedMonth) {
 
-        return false;
+            takenMonths.push(data.selectedMonth);
 
-    }
+        }
 
-    return true;
+    });
+
+    return MONTHS.filter(month =>
+        !takenMonths.includes(month)
+    );
+
+}
+
+function initialiseDrawEngine() {
+
+    document.querySelectorAll(".month-box")
+        .forEach(box => {
+
+            box.addEventListener("click", async () => {
+
+                const eligible =
+                    await checkDrawEligibility();
+
+                if (!eligible) return;
+
+                alert(
+                    "✅ Eligibility confirmed.\n\nReady for the draw."
+                );
+
+            });
+
+        });
 
 }
 function initialiseDrawEngine() {
