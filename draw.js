@@ -44,3 +44,55 @@ function createDrawBoxes() {
 }
 
 createDrawBoxes();
+
+// =======================================
+// DRAW ENGINE MODULE 1
+// =======================================
+
+function checkDrawEligibility() {
+
+    // User signed in?
+    if (!auth.currentUser) {
+
+        alert("Please sign in first.");
+
+        return false;
+
+    }
+
+    // Beneficiary name saved?
+    if (
+        !displayName ||
+        displayName.value.trim() === ""
+    ) {
+
+        alert("Please save your beneficiary name first.");
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+function initialiseDrawEngine() {
+
+    document.querySelectorAll(".month-box")
+        .forEach(box => {
+
+            box.addEventListener("click", () => {
+
+                if (!checkDrawEligibility()) return;
+
+                alert(
+                    "🎉 Congratulations!\n\nThe draw engine is now active.\n\nNext module will reveal your assigned month."
+                );
+
+            });
+
+        });
+
+}
+
+initialiseDrawEngine();
