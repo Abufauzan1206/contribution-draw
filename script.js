@@ -323,13 +323,3 @@ saveNameBtn.addEventListener("click", async () => {
 // =======================================
 
 console.log("Contribution Draw v1.0 loaded successfully.");
-
-// =======================================
-// Shared functions for draw.js
-// =======================================
-
-export {
-    auth,
-    db,
-    displayName
-};
