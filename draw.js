@@ -116,11 +116,14 @@ function initialiseDrawEngine() {
                 const eligible =
     await checkDrawEligibility();
 
+const eligible =
+    await checkDrawEligibility();
+
 if (!eligible) return;
 
 alert(
-                    "🎉 Congratulations!\n\nThe draw engine is now active.\n\nNext module will reveal your assigned month."
-                );
+    "✅ Eligibility confirmed.\n\nReady for the draw."
+);
 
             });
 
