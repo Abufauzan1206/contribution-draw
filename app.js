@@ -95,12 +95,14 @@ if (isAdmin) {
     return;
   }
 
-  alert(
-    "Admin names saved:\n" +
-    name1 +
-    "\n" +
-    name2
-  );
+  await addDoc(collection(db, "beneficiaries"), {
+  beneficiary1: name1,
+  beneficiary2: name2,
+  adminEmail: currentUser.email,
+  createdAt: serverTimestamp()
+});
+
+alert("Beneficiary names saved successfully!");
 
 } else {
 
