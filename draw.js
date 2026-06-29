@@ -113,9 +113,12 @@ function initialiseDrawEngine() {
 
            box.addEventListener("click", async () => {
 
-                if (!checkDrawEligibility()) return;
+                const eligible =
+    await checkDrawEligibility();
 
-                alert(
+if (!eligible) return;
+
+alert(
                     "🎉 Congratulations!\n\nThe draw engine is now active.\n\nNext module will reveal your assigned month."
                 );
 
