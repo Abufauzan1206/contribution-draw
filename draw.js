@@ -501,3 +501,104 @@ async function updateProgress() {
     }
 
         }
+
+// =======================================
+// Contribution Draw v1.0
+// draw.js
+// Part 5 of 5
+// Final initialization and utilities
+// =======================================
+
+
+// =======================================
+// Refresh the UI
+// =======================================
+
+async function refreshDrawUI() {
+
+    try {
+
+        await loadAssignedMonths();
+        await loadHallOfTransparency();
+        await updateLatestSelection();
+        await updateProgress();
+
+    } catch (error) {
+
+        console.error("Unable to refresh draw UI:", error);
+
+    }
+
+}
+
+
+// =======================================
+// Disable gift boxes when draw is complete
+// =======================================
+
+function checkIfDrawCompleted() {
+
+    if (assignedMonths.length >= TOTAL_AVAILABLE_MONTHS) {
+
+        giftBoxes.forEach((box) => {
+
+            box.style.pointerEvents = "none";
+            box.classList.add("disabled");
+
+        });
+
+        console.log("Contribution Draw has finished.");
+
+    }
+
+}
+
+
+// =======================================
+// Initialize after authentication
+// =======================================
+
+async function startContributionDraw() {
+
+    await refreshDrawUI();
+
+    checkIfDrawCompleted();
+
+}
+
+
+// =======================================
+// Update initializeDraw()
+// =======================================
+//
+// Replace your initializeDraw() function from
+// Part 1 with this version.
+//
+
+async function initializeDraw() {
+
+    try {
+
+        await startContributionDraw();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =======================================
+// Optional helper
+// =======================================
+
+window.refreshContributionDraw = refreshDrawUI;
+
+
+// =======================================
+// End of draw.js
+// =======================================
+
+console.log("Contribution Draw draw.js loaded successfully.");
