@@ -70,6 +70,9 @@ const unlockJuneBtn =
 const lockJuneBtn =
     document.getElementById("lockJuneBtn");
 
+const resetDrawBtn =
+    document.getElementById("resetDrawBtn");
+
 
 // =======================================================
 // Runtime Variables
