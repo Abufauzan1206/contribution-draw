@@ -459,6 +459,32 @@ function updateStatistics() {
 
 }
 
+async function unlockJune() {
+
+    await setDoc(
+        doc(db, "settings", "drawSettings"),
+        {
+            juneUnlocked: true
+        },
+        { merge: true }
+    );
+
+    alert("June has been unlocked.");
+}
+
+async function lockJune() {
+
+    await setDoc(
+        doc(db, "settings", "drawSettings"),
+        {
+            juneUnlocked: false
+        },
+        { merge: true }
+    );
+
+    alert("June has been locked.");
+}
+
 // =======================================================
 // Contribution Draw v1.1
 // draw.js
