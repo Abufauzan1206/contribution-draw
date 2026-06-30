@@ -480,7 +480,7 @@ async function refreshDraw() {
 
 function checkDrawCompleted() {
 
-    if (assignedMonths.length < 9) return;
+    if (assignedMonths.length < MONTHS.length) return;
 
     const boxes =
         document.querySelectorAll(".gift-box");
