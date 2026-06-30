@@ -63,6 +63,12 @@ const totalParticipants = document.getElementById("totalParticipants");
 const monthsSelected = document.getElementById("monthsSelected");
 const monthsRemaining = document.getElementById("monthsRemaining");
 
+const unlockJuneBtn =
+    document.getElementById("unlockJuneBtn");
+
+const lockJuneBtn =
+    document.getElementById("lockJuneBtn");
+
 
 // =======================================================
 // Runtime Variables
