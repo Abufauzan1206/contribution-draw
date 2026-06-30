@@ -46,9 +46,6 @@ const MONTHS = [
 
 const PARTICIPANTS = "participants";
 const TRANSPARENCY = "hallOfTransparency";
-// Administrator account
-const ADMIN_EMAIL = "your-email@gmail.com";
-
 
 // =======================================================
 // HTML Elements
