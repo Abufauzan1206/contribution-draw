@@ -323,6 +323,43 @@ saveNameBtn.addEventListener("click", async () => {
 });
 
 // =======================================
+// Save Current Draw Beneficiaries
+// =======================================
+
+saveBeneficiariesBtn.addEventListener("click", async () => {
+
+    const first = beneficiary1.value.trim();
+    const second = beneficiary2.value.trim();
+
+    if (!first || !second) {
+        alert("Please enter both beneficiary names.");
+        return;
+    }
+
+    try {
+
+        await setDoc(doc(db, "draw", "current"), {
+
+            beneficiary1: first,
+            beneficiary2: second,
+            updatedAt: serverTimestamp()
+
+        });
+
+        beneficiaryStatus.textContent =
+            "✅ Beneficiaries saved successfully.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Failed to save beneficiaries.");
+
+    }
+
+});
+
+// =======================================
 // End of Phase 2
 // =======================================
 
