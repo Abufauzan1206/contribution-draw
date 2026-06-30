@@ -80,18 +80,7 @@ function getParticipantName() {
     if (input && input.value.trim() !== "") {
         return input.value.trim();
     }
-
-    function isAdmin() {
-
-    return currentUser &&
-           currentUser.email === ADMIN_EMAIL;
-
-}
-
-    return currentUser.displayName || "Participant";
-}
-
-
+    
 // =======================================================
 // Authentication
 // =======================================================
