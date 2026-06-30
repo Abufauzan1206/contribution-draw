@@ -4,16 +4,14 @@
 // Part 1 of 5
 // =======================================
 
-import { auth, db } from "./firebase.js";
-
 import {
     doc,
     getDoc,
     getDocs,
     setDoc,
+    addDoc,
     collection
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
 // =======================================
 // Months
 // =======================================
