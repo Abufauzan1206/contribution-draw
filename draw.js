@@ -289,9 +289,7 @@ async function saveAssignment(month) {
 
         email: currentUser.email,
 
-        name:
-            currentUser.displayName ||
-            "Participant",
+            name: getParticipantName(),
 
         assignedMonth: month,
 
