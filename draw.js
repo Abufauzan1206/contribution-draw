@@ -169,3 +169,167 @@ async function loadAssignedMonths() {
     });
 
 }
+
+// =======================================================
+// Contribution Draw v1.1
+// draw.js
+// Section 2 of 4
+// Draw Engine
+// =======================================================
+
+
+// =======================================================
+// Handle Draw
+// =======================================================
+
+async function handleDraw() {
+
+    if (!currentUser) {
+
+        alert("Please sign in with Google first.");
+
+        return;
+
+    }
+
+    if (drawBusy) return;
+
+    drawBusy = true;
+
+    try {
+
+        // Check whether participant already has a month
+        const participantRef = doc(
+            db,
+            PARTICIPANTS,
+            currentUser.uid
+        );
+
+        const participantSnap =
+            await getDoc(participantRef);
+
+        if (participantSnap.exists()) {
+
+            const data = participantSnap.data();
+
+            if (data.assignedMonth) {
+
+                alert(
+                    `You already own ${data.assignedMonth}.`
+                );
+
+                drawBusy = false;
+
+                return;
+
+            }
+
+        }
+
+        // Refresh assigned months
+        await loadAssignedMonths();
+
+        // Determine available months
+        const availableMonths =
+            MONTHS.filter(month =>
+                !assignedMonths.includes(month)
+            );
+
+        if (availableMonths.length === 0) {
+
+            alert("All public months have been assigned.");
+
+            drawBusy = false;
+
+            return;
+
+        }
+
+        // Secret random assignment
+        const assignedMonth =
+            availableMonths[
+                Math.floor(
+                    Math.random() *
+                    availableMonths.length
+                )
+            ];
+
+        await saveAssignment(assignedMonth);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to complete draw.");
+
+    }
+
+    drawBusy = false;
+
+}
+
+
+
+// =======================================================
+// Save Assignment
+// =======================================================
+
+async function saveAssignment(month) {
+
+    const participant = {
+
+        uid: currentUser.uid,
+
+        email: currentUser.email,
+
+        name:
+            currentUser.displayName ||
+            "Participant",
+
+        assignedMonth: month,
+
+        assignedAt: serverTimestamp()
+
+    };
+
+    // Save participant
+    await setDoc(
+
+        doc(
+            db,
+            PARTICIPANTS,
+            currentUser.uid
+        ),
+
+        participant
+
+    );
+
+    // Hall of Transparency
+    await addDoc(
+
+        collection(
+            db,
+            TRANSPARENCY
+        ),
+
+        participant
+
+    );
+
+    assignedMonths.push(month);
+
+    latestSelection.textContent =
+        `${participant.name} selected ${month}`;
+
+    alert(
+        `Congratulations!\n\nYour assigned month is ${month}.`
+    );
+
+    await loadTransparency();
+
+    updateProgress();
+
+    updateStatistics();
+
+    }
