@@ -216,6 +216,20 @@ async function assignRandomMonth() {
 
     });
 
+    await addDoc(collection(db, "transparency"), {
+
+    beneficiaryName: participant.beneficiaryName,
+
+    month: selectedMonth,
+
+    email: user.email,
+
+    uid: user.uid,
+
+    timestamp: new Date().toISOString()
+
+});
+
     return selectedMonth;
 
 }
