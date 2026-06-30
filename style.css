@@ -990,3 +990,17 @@ font-size:13px;
 opacity:.85;
 
 }
+
+/* =======================================
+   Admin June Box
+======================================= */
+
+.admin-box {
+    background: linear-gradient(135deg, #FFD700, #F4B400);
+    border: 2px solid #C99700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.admin-box .gift-icon {
+    font-size: 2rem;
+}
