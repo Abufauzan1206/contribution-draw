@@ -333,3 +333,119 @@ async function saveAssignment(month) {
     updateStatistics();
 
     }
+
+// =======================================================
+// Contribution Draw v1.1
+// draw.js
+// Section 3 of 4
+// Transparency, Progress & Statistics
+// =======================================================
+
+
+// =======================================================
+// Load Hall of Transparency
+// =======================================================
+
+async function loadTransparency() {
+
+    if (!selectionHistory) return;
+
+    selectionHistory.innerHTML = "";
+
+    const q = query(
+        collection(db, TRANSPARENCY),
+        orderBy("assignedAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+
+        selectionHistory.innerHTML = `
+            <p class="empty-message">
+                No selections have been recorded yet.
+            </p>
+        `;
+
+        latestSelection.textContent =
+            "No month has been selected yet.";
+
+        return;
+    }
+
+    let latestShown = false;
+
+    snapshot.forEach((docSnap) => {
+
+        const data = docSnap.data();
+
+        if (!latestShown) {
+
+            latestSelection.textContent =
+                `${data.name} selected ${data.assignedMonth}`;
+
+            latestShown = true;
+
+        }
+
+        const item = document.createElement("div");
+
+        item.className = "history-item";
+
+        item.innerHTML = `
+            <strong>${data.name}</strong><br>
+            <span>${data.assignedMonth}</span>
+        `;
+
+        selectionHistory.appendChild(item);
+
+    });
+
+}
+
+
+
+// =======================================================
+// Progress
+// =======================================================
+
+function updateProgress() {
+
+    const selected = assignedMonths.length;
+
+    const total = 10;
+
+    progressText.textContent =
+        `${selected} of ${total} months selected`;
+
+    if (progressFill) {
+
+        progressFill.style.width =
+            `${(selected / total) * 100}%`;
+
+    }
+
+}
+
+
+
+// =======================================================
+// Statistics
+// =======================================================
+
+function updateStatistics() {
+
+    const selected = assignedMonths.length;
+
+    if (totalParticipants)
+        totalParticipants.textContent = selected;
+
+    if (monthsSelected)
+        monthsSelected.textContent = selected;
+
+    if (monthsRemaining)
+        monthsRemaining.textContent =
+            10 - selected;
+
+}
+
