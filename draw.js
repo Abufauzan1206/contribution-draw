@@ -79,8 +79,18 @@ function createDrawBoxes() {
 
 }
 
-createDrawBoxes();
-initialiseDrawEngine();
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        createDrawBoxes();
+        initialiseDrawEngine();
+
+        console.log("Draw engine initialized");
+
+    }, 500);
+
+});
 
 // =======================================
 // Check Draw Eligibility
