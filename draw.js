@@ -352,6 +352,12 @@ async function saveAssignment(month) {
 
     assignedMonths.push(month);
 
+    if (month === "June") {
+
+    await lockJune();
+
+}
+
     latestSelection.textContent =
         `${participant.name} selected ${month}`;
 
