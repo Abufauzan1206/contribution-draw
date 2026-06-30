@@ -164,3 +164,148 @@ async function loadAssignedMonths() {
     });
 
 }
+
+// =======================================
+// Contribution Draw v1.0
+// draw.js
+// Part 2 of 5
+// Gift box events and random month selection
+// =======================================
+
+
+// =======================================
+// Attach click events to every gift box
+// =======================================
+
+giftBoxes.forEach((box) => {
+
+    box.addEventListener("click", async () => {
+
+        await handleGiftBoxClick(box);
+
+    });
+
+});
+
+
+// =======================================
+// Main Draw Handler
+// =======================================
+
+async function handleGiftBoxClick(box) {
+
+    // Must be signed in
+    if (!currentUser) {
+        alert("Please sign in first.");
+        return;
+    }
+
+    // Prevent rapid multiple taps
+    if (drawInProgress) {
+        return;
+    }
+
+    drawInProgress = true;
+
+    try {
+
+        // Check whether this participant already has a month
+        const existingMonth = await getParticipantMonth();
+
+        if (existingMonth) {
+
+            alert(
+                `You have already been assigned ${existingMonth}.`
+            );
+
+            drawInProgress = false;
+            return;
+        }
+
+        // Refresh assigned months from Firebase
+        await loadAssignedMonths();
+
+        // Secret random month
+        const selectedMonth = getRandomAvailableMonth();
+
+        if (!selectedMonth) {
+
+            alert("All available months have been assigned.");
+
+            drawInProgress = false;
+            return;
+        }
+
+        // Small visual feedback
+        box.classList.add("selected");
+
+        // Continue in Part 3
+        await saveParticipantAssignment(selectedMonth);
+
+        box.classList.remove("selected");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to complete the draw.");
+
+    }
+
+    drawInProgress = false;
+
+}
+
+
+
+// =======================================
+// Check if current participant already has
+// an assigned month
+// =======================================
+
+async function getParticipantMonth() {
+
+    const participantRef = doc(
+        db,
+        PARTICIPANTS_COLLECTION,
+        currentUser.uid
+    );
+
+    const snapshot = await getDoc(participantRef);
+
+    if (!snapshot.exists()) {
+        return null;
+    }
+
+    const data = snapshot.data();
+
+    return data.assignedMonth || null;
+
+}
+
+
+
+// =======================================
+// Random Available Month
+// =======================================
+
+function getRandomAvailableMonth() {
+
+    // Remove months already assigned
+    const availableMonths = DRAW_MONTHS.filter((month) => {
+
+        return !assignedMonths.includes(month);
+
+    });
+
+    if (availableMonths.length === 0) {
+        return null;
+    }
+
+    const randomIndex = Math.floor(
+        Math.random() * availableMonths.length
+    );
+
+    return availableMonths[randomIndex];
+
+}
