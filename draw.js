@@ -1,26 +1,36 @@
 // =======================================
 // Contribution Draw v1.0
-// Draw Engine
-// Part 1
+// draw.js
+// Part 1 of 5
+// Firebase setup, constants and initialization
 // =======================================
 
+// Import Firebase services
 import { auth, db } from "./firebase.js";
 
 import {
     doc,
     getDoc,
-    getDocs,
     setDoc,
+    updateDoc,
     addDoc,
-    collection
-} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    getDocs,
+    collection,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 // =======================================
-// Months
+// Months available in the draw
 // =======================================
 
-const MONTHS = [
-    "June",
+// June is reserved for the Admin and will never
+// be assigned during the public draw.
+const DRAW_MONTHS = [
     "July",
     "August",
     "September",
@@ -32,274 +42,125 @@ const MONTHS = [
     "March"
 ];
 
+const ADMIN_MONTH = "June";
+
+
 // =======================================
-// DOM Elements
+// Collection names
 // =======================================
 
-const boxesContainer =
-    document.getElementById("boxesContainer");
+const PARTICIPANTS_COLLECTION = "participants";
+const TRANSPARENCY_COLLECTION = "hallOfTransparency";
+const SETTINGS_COLLECTION = "settings";
 
-const progressFill =
-    document.getElementById("progressFill");
 
-const progressText =
-    document.getElementById("progressText");
+// =======================================
+// Cached DOM Elements
+// =======================================
 
+// Gift boxes (all elements with class "gift-box")
+const giftBoxes = document.querySelectorAll(".gift-box");
+
+// Latest Selection display
 const latestSelection =
     document.getElementById("latestSelection");
 
-const drawStatus =
-    document.getElementById("drawStatus");
+// Progress display
+const progressText =
+    document.getElementById("progressText");
+
+// Optional progress bar
+const progressBar =
+    document.getElementById("progressBar");
+
+// Hall of Transparency container
+const hallContainer =
+    document.getElementById("hallOfTransparency");
+
 
 // =======================================
-// Create Gift Boxes
+// Runtime Variables
 // =======================================
 
-function createDrawBoxes() {
+let currentUser = null;
 
-    if (!boxesContainer) return;
+// Prevent multiple taps
+let drawInProgress = false;
 
-    boxesContainer.innerHTML = "";
+// Stores assigned months already in Firebase
+let assignedMonths = [];
 
-    MONTHS.forEach((month, index) => {
+// Total public months available
+const TOTAL_AVAILABLE_MONTHS = DRAW_MONTHS.length;
 
-        const box = document.createElement("button");
-
-        box.className = "month-box";
-
-        box.dataset.month = month;
-
-        box.innerHTML = `
-            <div class="gift-icon">🎁</div>
-            <div class="box-question">?</div>
-            <div class="box-number">Box ${index + 1}</div>
-            <div class="box-footer">Tap to Draw</div>
-        `;
-
-        boxesContainer.appendChild(box);
-
-    });
-
-}
 
 // =======================================
-// Check Draw Eligibility
+// Authentication Listener
 // =======================================
 
-async function checkDrawEligibility() {
-
-    const user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
 
     if (!user) {
-
-        alert("Please sign in with Google first.");
-
-        return false;
-
+        console.log("No authenticated user.");
+        return;
     }
 
-    const participantRef =
-        doc(db, "participants", user.uid);
+    currentUser = user;
 
-    const participantSnap =
-        await getDoc(participantRef);
+    console.log("Signed in as:", user.displayName);
 
-    if (!participantSnap.exists()) {
+    // Load existing assignments
+    initializeDraw();
 
-        alert("Please save your beneficiary name first.");
+});
 
-        return false;
 
-    }
+// =======================================
+// Initialize Draw
+// =======================================
 
-    const participant =
-        participantSnap.data();
+async function initializeDraw() {
 
-    if (!participant.beneficiaryName) {
+    try {
 
-        alert("Please save your beneficiary name first.");
+        await loadAssignedMonths();
 
-        return false;
+        await loadHallOfTransparency();
 
-    }
+        await updateProgress();
 
-    if (participant.selectedMonth) {
+    } catch (error) {
 
-        alert(
-            "You have already selected " +
-            participant.selectedMonth
+        console.error(
+            "Initialization failed:",
+            error
         );
 
-        return false;
-
     }
-
-    return true;
 
 }
 
+
 // =======================================
-// Get Available Months
+// Load Assigned Months
 // =======================================
 
-async function getAvailableMonths() {
+async function loadAssignedMonths() {
 
-    const snapshot =
-        await getDocs(collection(db, "participants"));
+    assignedMonths = [];
 
-    const takenMonths = [];
+    const snapshot = await getDocs(
+        collection(db, PARTICIPANTS_COLLECTION)
+    );
 
-    snapshot.forEach(docSnap => {
+    snapshot.forEach((document) => {
 
-        const data = docSnap.data();
+        const data = document.data();
 
-        if (data.selectedMonth) {
-
-            takenMonths.push(data.selectedMonth);
-
+        if (data.assignedMonth) {
+            assignedMonths.push(data.assignedMonth);
         }
 
     });
 
-    return MONTHS.filter(month =>
-        month !== "June" &&
-        !takenMonths.includes(month)
-    );
-
-            }
-
-    });
-
-    return MONTHS.filter(month =>
-
-    month !== "June" &&
-
-    !takenMonths.includes(month)
-
-);
-
 }
-
-// =======================================
-// Assign Random Month
-// =======================================
-
-// =======================================
-// Assign Random Month
-// =======================================
-
-async function assignRandomMonth() {
-
-    const user = auth.currentUser;
-
-    if (!user) return null;
-
-    const availableMonths =
-        await getAvailableMonths();
-
-    if (availableMonths.length === 0) {
-
-        alert("All months have already been assigned.");
-
-        return null;
-
-    }
-
-// =======================================
-// Initialise Draw Engine
-// =======================================
-
-function initialiseDrawEngine() {
-
-    document.querySelectorAll(".month-box")
-        .forEach(box => {
-
-            box.addEventListener("click", async () => {
-
-                const eligible =
-                    await checkDrawEligibility();
-
-                if (!eligible) return;
-
-                const selectedMonth =
-                    await assignRandomMonth();
-
-                if (!selectedMonth) return;
-
-                alert(
-                    "🎉 Congratulations!\n\nYour assigned month is:\n\n" +
-                    selectedMonth
-                );
-
-                if (latestSelection) {
-
-                    latestSelection.textContent =
-                        selectedMonth;
-
-                }
-
-                if (drawStatus) {
-
-                    drawStatus.textContent =
-                        "✅ Draw completed successfully.";
-
-                }
-
-                loadTransparency();
-
-            });
-
-        });
-
-}
-
-createDrawBoxes();
-initialiseDrawEngine();
-
-// =======================================
-// Hall of Transparency
-// =======================================
-
-const selectionHistory =
-    document.getElementById("selectionHistory");
-
-async function loadTransparency() {
-
-    if (!selectionHistory) return;
-
-    const snapshot =
-        await getDocs(collection(db, "transparency"));
-
-    selectionHistory.innerHTML = "";
-
-    if (snapshot.empty) {
-
-        selectionHistory.innerHTML =
-            "<p class='empty-message'>No selections have been recorded yet.</p>";
-
-        return;
-
-    }
-
-    snapshot.forEach(docSnap => {
-
-        const data = docSnap.data();
-
-        const item = document.createElement("div");
-
-        item.className = "history-item";
-
-        item.innerHTML = `
-            <strong>${data.beneficiaryName}</strong><br>
-            ${data.month}<br>
-            ${new Date(data.timestamp).toLocaleString()}
-            <hr>
-        `;
-
-        selectionHistory.appendChild(item);
-
-    });
-
-}
-
-loadTransparency();
