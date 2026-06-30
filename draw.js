@@ -505,6 +505,54 @@ async function unlockJune() {
     alert("June has been unlocked.");
 }
 
+async function resetDraw() {
+
+    const confirmed = confirm(
+        "Are you sure you want to reset the draw?\n\nThis will permanently delete all participant selections and the Hall of Transparency."
+    );
+
+    if (!confirmed) return;
+
+    // Delete all participant documents
+    const participantsSnapshot = await getDocs(
+        collection(db, PARTICIPANTS)
+    );
+
+    for (const docSnap of participantsSnapshot.docs) {
+
+        await deleteDoc(docSnap.ref);
+
+    }
+
+    // Delete all transparency records
+    const transparencySnapshot = await getDocs(
+        collection(db, TRANSPARENCY)
+    );
+
+    for (const docSnap of transparencySnapshot.docs) {
+
+        await deleteDoc(docSnap.ref);
+
+    }
+
+    // Lock June again
+    await setDoc(
+        doc(db, "settings", "drawSettings"),
+        {
+            juneUnlocked: false
+        },
+        { merge: true }
+    );
+
+    // Refresh the application
+    assignedMonths = [];
+
+    await finishDraw();
+
+    alert("Contribution Draw has been reset successfully.");
+
+}
+
 async function lockJune() {
 
     await setDoc(
