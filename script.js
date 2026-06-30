@@ -48,6 +48,10 @@ const adminNav = document.getElementById("adminNav");
 const displayName = document.getElementById("displayName");
 const saveNameBtn = document.getElementById("saveNameBtn");
 const saveStatus = document.getElementById("saveStatus");
+const beneficiary1 = document.getElementById("beneficiary1");
+const beneficiary2 = document.getElementById("beneficiary2");
+const saveBeneficiariesBtn = document.getElementById("saveBeneficiariesBtn");
+const beneficiaryStatus = document.getElementById("beneficiaryStatus");
 
 // =======================================
 // Pages
