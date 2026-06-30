@@ -419,16 +419,19 @@ function initialiseDrawEngine() {
 
                 }
 
+                loadTransparency();
+
             });
 
         });
 
 }
 
+createDrawBoxes();
 initialiseDrawEngine();
 
 // =======================================
-// Hall of Transparency - Load Records
+// Hall of Transparency
 // =======================================
 
 const selectionHistory =
@@ -438,48 +441,39 @@ async function loadTransparency() {
 
     if (!selectionHistory) return;
 
-    try {
+    const snapshot =
+        await getDocs(collection(db, "transparency"));
 
-        const snapshot =
-            await getDocs(collection(db, "transparency"));
+    selectionHistory.innerHTML = "";
 
-        selectionHistory.innerHTML = "";
+    if (snapshot.empty) {
 
-        if (snapshot.empty) {
+        selectionHistory.innerHTML =
+            "<p class='empty-message'>No selections have been recorded yet.</p>";
 
-            selectionHistory.innerHTML =
-                `<p class="empty-message">No selections have been recorded yet.</p>`;
-
-            return;
-
-        }
-
-        snapshot.forEach(docSnap => {
-
-            const data = docSnap.data();
-
-            const item = document.createElement("div");
-
-            item.className = "history-item";
-
-            item.innerHTML = `
-                <p><strong>${data.beneficiaryName}</strong></p>
-                <p>Month: ${data.month}</p>
-                <p>${new Date(data.timestamp).toLocaleString()}</p>
-                <hr>
-            `;
-
-            selectionHistory.appendChild(item);
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
+        return;
 
     }
 
+    snapshot.forEach(docSnap => {
+
+        const data = docSnap.data();
+
+        const item = document.createElement("div");
+
+        item.className = "history-item";
+
+        item.innerHTML = `
+            <strong>${data.beneficiaryName}</strong><br>
+            ${data.month}<br>
+            ${new Date(data.timestamp).toLocaleString()}
+            <hr>
+        `;
+
+        selectionHistory.appendChild(item);
+
+    });
+
 }
 
-// Load when page opens
 loadTransparency();
