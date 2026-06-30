@@ -84,6 +84,13 @@ function getParticipantName() {
         return input.value.trim();
     }
 
+    function isAdmin() {
+
+    return currentUser &&
+           currentUser.email === ADMIN_EMAIL;
+
+}
+
     return currentUser.displayName || "Participant";
 }
 
