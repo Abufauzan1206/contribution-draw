@@ -80,6 +80,9 @@ function getParticipantName() {
     if (input && input.value.trim() !== "") {
         return input.value.trim();
     }
+
+    return currentUser.displayName || "Participant";
+}
     
 // =======================================================
 // Authentication
