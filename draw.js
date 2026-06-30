@@ -1,8 +1,10 @@
 // =======================================
 // Contribution Draw v1.0
 // Draw Engine
-// Part 1 of 5
+// Part 1
 // =======================================
+
+import { auth, db } from "./firebase.js";
 
 import {
     doc,
@@ -12,12 +14,13 @@ import {
     addDoc,
     collection
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
 // =======================================
 // Months
 // =======================================
 
 const MONTHS = [
-    "June",      // Reserved for Admin
+    "June",
     "July",
     "August",
     "September",
@@ -79,19 +82,6 @@ function createDrawBoxes() {
 
 }
 
-window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        createDrawBoxes();
-        initialiseDrawEngine();
-
-        console.log("Draw engine initialized");
-
-    }, 500);
-
-});
-
 // =======================================
 // Check Draw Eligibility
 // =======================================
@@ -146,7 +136,7 @@ async function checkDrawEligibility() {
 
     return true;
 
-    }
+}
 
 // =======================================
 // Get Available Months
@@ -168,6 +158,15 @@ async function getAvailableMonths() {
             takenMonths.push(data.selectedMonth);
 
         }
+
+    });
+
+    return MONTHS.filter(month =>
+        month !== "June" &&
+        !takenMonths.includes(month)
+    );
+
+            }
 
     });
 
