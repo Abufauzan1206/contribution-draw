@@ -309,3 +309,74 @@ function getRandomAvailableMonth() {
     return availableMonths[randomIndex];
 
 }
+
+// =======================================
+// Contribution Draw v1.0
+// draw.js
+// Part 3 of 5
+// Save assignment to Firebase
+// =======================================
+
+
+// =======================================
+// Save participant assignment
+// =======================================
+
+async function saveParticipantAssignment(selectedMonth) {
+
+    // Participant document
+    const participantRef = doc(
+        db,
+        PARTICIPANTS_COLLECTION,
+        currentUser.uid
+    );
+
+    const participantData = {
+        uid: currentUser.uid,
+        name: currentUser.displayName || "Anonymous",
+        email: currentUser.email || "",
+        assignedMonth: selectedMonth,
+        assignedAt: serverTimestamp()
+    };
+
+    // Save participant
+    await setDoc(participantRef, participantData);
+
+    // Update local cache
+    assignedMonths.push(selectedMonth);
+
+    // Save to Hall of Transparency
+    await saveTransparencyRecord(participantData);
+
+    // Refresh UI (implemented in Part 4)
+    await loadHallOfTransparency();
+    await updateLatestSelection(participantData);
+    await updateProgress();
+
+    alert(`Congratulations! Your assigned month is ${selectedMonth}.`);
+
+}
+
+
+
+// =======================================
+// Save record to Hall of Transparency
+// =======================================
+
+async function saveTransparencyRecord(participant) {
+
+    await addDoc(
+
+        collection(db, TRANSPARENCY_COLLECTION),
+
+        {
+            uid: participant.uid,
+            name: participant.name,
+            email: participant.email,
+            assignedMonth: participant.assignedMonth,
+            assignedAt: serverTimestamp()
+        }
+
+    );
+
+}
