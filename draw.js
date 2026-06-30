@@ -80,6 +80,7 @@ function createDrawBoxes() {
 }
 
 createDrawBoxes();
+initialiseDrawEngine();
 
 // =======================================
 // Check Draw Eligibility
