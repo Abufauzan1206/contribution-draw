@@ -388,13 +388,6 @@ async function saveTransparencyRecord(participant) {
 // Hall of Transparency & UI Updates
 // =======================================
 
-import {
-    query,
-    orderBy,
-    limit
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
 // =======================================
 // Load Hall of Transparency
 // =======================================
