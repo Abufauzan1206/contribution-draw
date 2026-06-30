@@ -412,23 +412,13 @@ async function loadHallOfTransparency() {
 
     const snapshot = await getDocs(transparencyQuery);
 
-    snapshot.forEach((document) => {
+    snapshot.forEach((docSnap) => {
 
-        const data = document.data();
+    const data = docSnap.data();
 
-        const row = document.createElement("div");
-        row.className = "transparency-row";
+    const row = document.createElement("div");
 
-        row.innerHTML = `
-            <strong>${data.name}</strong>
-            <br>
-            ${data.assignedMonth}
-        `;
-
-        hallContainer.appendChild(row);
-
-    });
-
+});
 }
 
 
