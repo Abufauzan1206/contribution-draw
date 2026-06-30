@@ -143,6 +143,17 @@ function createGiftBoxes() {
         const box = document.createElement("button");
 
         box.className = "gift-box";
+        // First box is reserved for the admin (June)
+if (i === 1 && isAdmin()) {
+
+    box.classList.add("admin-box");
+
+    box.innerHTML = `
+        <div class="gift-icon">👑🎁</div>
+        <div class="gift-number"></div>
+    `;
+
+}
 
         box.type = "button";
 
