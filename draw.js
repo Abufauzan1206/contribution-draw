@@ -449,3 +449,102 @@ function updateStatistics() {
 
 }
 
+// =======================================================
+// Contribution Draw v1.1
+// draw.js
+// Section 4 of 4
+// Final Utilities
+// =======================================================
+
+
+// =======================================================
+// Refresh Everything
+// =======================================================
+
+async function refreshDraw() {
+
+    await loadAssignedMonths();
+
+    await loadTransparency();
+
+    updateProgress();
+
+    updateStatistics();
+
+}
+
+
+// =======================================================
+// Disable Draw When Complete
+// =======================================================
+
+function checkDrawCompleted() {
+
+    if (assignedMonths.length < 9) return;
+
+    const boxes =
+        document.querySelectorAll(".gift-box");
+
+    boxes.forEach(box => {
+
+        box.disabled = true;
+
+        box.classList.add("disabled");
+
+    });
+
+}
+
+
+// =======================================================
+// Refresh After Successful Draw
+// =======================================================
+
+async function finishDraw() {
+
+    await refreshDraw();
+
+    checkDrawCompleted();
+
+}
+
+
+// =======================================================
+// Replace saveAssignment()
+// ending
+//
+// Replace ONLY these four lines:
+//
+// await loadTransparency();
+// updateProgress();
+// updateStatistics();
+//
+// with:
+//
+// await finishDraw();
+//
+// =======================================================
+
+
+// =======================================================
+// Manual Refresh (Developer)
+// =======================================================
+
+window.refreshContributionDraw =
+    refreshDraw;
+
+
+// =======================================================
+// Startup Check
+// =======================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        console.log(
+            "Contribution Draw v1.1 loaded successfully."
+        );
+
+    }
+);
