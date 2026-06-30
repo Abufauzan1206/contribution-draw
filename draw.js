@@ -569,6 +569,24 @@ async function finishDraw() {
 window.refreshContributionDraw =
     refreshDraw;
 
+if (unlockJuneBtn) {
+
+    unlockJuneBtn.addEventListener(
+        "click",
+        unlockJune
+    );
+
+}
+
+if (lockJuneBtn) {
+
+    lockJuneBtn.addEventListener(
+        "click",
+        lockJune
+    );
+
+}
+
 
 // =======================================================
 // Startup Check
