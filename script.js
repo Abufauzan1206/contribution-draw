@@ -16,9 +16,9 @@ import {
 import {
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
 // =======================================
 // Constants
 // =======================================
