@@ -268,9 +268,7 @@ async function handleDraw() {
 
         // Determine available months
         const availableMonths =
-            MONTHS.filter(month =>
-                !assignedMonths.includes(month)
-            );
+    await getAvailableMonths();
 
         if (availableMonths.length === 0) {
 
