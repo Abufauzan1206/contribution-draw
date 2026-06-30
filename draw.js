@@ -74,6 +74,17 @@ let assignedMonths = [];
 
 let drawBusy = false;
 
+function getParticipantName() {
+
+    const input = document.getElementById("displayName");
+
+    if (input && input.value.trim() !== "") {
+        return input.value.trim();
+    }
+
+    return currentUser.displayName || "Participant";
+}
+
 
 // =======================================================
 // Authentication
