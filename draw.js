@@ -668,6 +668,14 @@ if (lockJuneBtn) {
 
 }
 
+if (resetDrawBtn) {
+
+    resetDrawBtn.addEventListener(
+        "click",
+        resetDraw
+    );
+
+}
 
 // =======================================================
 // Startup Check
