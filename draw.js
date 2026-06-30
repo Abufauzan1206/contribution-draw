@@ -405,11 +405,6 @@ async function loadHallOfTransparency() {
         orderBy("assignedAt", "desc")
     );
 
-    const transparencyQuery = query(
-    collection(db, TRANSPARENCY_COLLECTION),
-    orderBy("assignedAt", "desc")
-);
-
 const snapshot = await getDocs(transparencyQuery);
 
 snapshot.forEach((docSnap) => {
