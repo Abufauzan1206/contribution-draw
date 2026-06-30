@@ -118,32 +118,6 @@ onAuthStateChanged(auth, (user) => {
 
 
 // =======================================
-// Initialize Draw
-// =======================================
-
-async function initializeDraw() {
-
-    try {
-
-        await loadAssignedMonths();
-
-        await loadHallOfTransparency();
-
-        await updateProgress();
-
-    } catch (error) {
-
-        console.error(
-            "Initialization failed:",
-            error
-        );
-
-    }
-
-}
-
-
-// =======================================
 // Load Assigned Months
 // =======================================
 
