@@ -216,6 +216,24 @@ async function assignRandomMonth() {
 
     });
 
+    try {
+
+    await addDoc(collection(db, "transparency"), {
+
+        beneficiaryName: participant.beneficiaryName || "Unknown",
+        month: selectedMonth,
+        email: user.email || "",
+        uid: user.uid,
+        timestamp: new Date().toISOString()
+
+    });
+
+    console.log("Transparency saved");
+
+} catch (err) {
+    console.error("Transparency write failed:", err);
+    }
+
     await addDoc(collection(db, "transparency"), {
 
     beneficiaryName: participant.beneficiaryName,
