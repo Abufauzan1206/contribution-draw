@@ -105,11 +105,7 @@ async function initializeDraw() {
 
     await loadAssignedMonths();
 
-    await loadTransparency();
-
-    updateProgress();
-
-    updateStatistics();
+    await finishDraw();
 
 }
 
