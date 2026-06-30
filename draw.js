@@ -380,3 +380,124 @@ async function saveTransparencyRecord(participant) {
     );
 
 }
+
+// =======================================
+// Contribution Draw v1.0
+// draw.js
+// Part 4 of 5
+// Hall of Transparency & UI Updates
+// =======================================
+
+import {
+    query,
+    orderBy,
+    limit
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// =======================================
+// Load Hall of Transparency
+// =======================================
+
+async function loadHallOfTransparency() {
+
+    if (!hallContainer) return;
+
+    hallContainer.innerHTML = "";
+
+    const transparencyQuery = query(
+        collection(db, TRANSPARENCY_COLLECTION),
+        orderBy("assignedAt", "desc")
+    );
+
+    const snapshot = await getDocs(transparencyQuery);
+
+    snapshot.forEach((document) => {
+
+        const data = document.data();
+
+        const row = document.createElement("div");
+        row.className = "transparency-row";
+
+        row.innerHTML = `
+            <strong>${data.name}</strong>
+            <br>
+            ${data.assignedMonth}
+        `;
+
+        hallContainer.appendChild(row);
+
+    });
+
+}
+
+
+
+// =======================================
+// Update Latest Selection
+// =======================================
+
+async function updateLatestSelection(participant = null) {
+
+    if (!latestSelection) return;
+
+    // If participant supplied, update immediately
+    if (participant) {
+
+        latestSelection.textContent =
+            `${participant.name} → ${participant.assignedMonth}`;
+
+        return;
+    }
+
+    // Otherwise load latest from Firebase
+    const latestQuery = query(
+        collection(db, TRANSPARENCY_COLLECTION),
+        orderBy("assignedAt", "desc"),
+        limit(1)
+    );
+
+    const snapshot = await getDocs(latestQuery);
+
+    if (snapshot.empty) {
+
+        latestSelection.textContent = "No selections yet.";
+
+        return;
+
+    }
+
+    const latest = snapshot.docs[0].data();
+
+    latestSelection.textContent =
+        `${latest.name} → ${latest.assignedMonth}`;
+
+}
+
+
+
+// =======================================
+// Update Progress
+// =======================================
+
+async function updateProgress() {
+
+    const assignedCount = assignedMonths.length;
+
+    if (progressText) {
+
+        progressText.textContent =
+            `${assignedCount} / ${TOTAL_AVAILABLE_MONTHS} Assigned`;
+
+    }
+
+    if (progressBar) {
+
+        const percentage =
+            (assignedCount / TOTAL_AVAILABLE_MONTHS) * 100;
+
+        progressBar.style.width = percentage + "%";
+
+    }
+
+        }
