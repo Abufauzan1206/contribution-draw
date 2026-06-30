@@ -182,6 +182,31 @@ async function loadAssignedMonths() {
 
 }
 
+async function getAvailableMonths() {
+
+    const settingsRef =
+        doc(db, "settings", "drawSettings");
+
+    const settingsSnap =
+        await getDoc(settingsRef);
+
+    let months = [...MONTHS];
+
+    if (
+        settingsSnap.exists() &&
+        settingsSnap.data().juneUnlocked
+    ) {
+
+        months.unshift("June");
+
+    }
+
+    return months.filter(
+        month => !assignedMonths.includes(month)
+    );
+
+}
+
 // =======================================================
 // Contribution Draw v1.1
 // draw.js
